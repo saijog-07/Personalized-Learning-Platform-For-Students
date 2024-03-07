@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');
+
+        #upperbar {
+            position: relative;
+            width: 100vw;
+            height: 70px;
+            padding: 0;
+            margin: 0;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #upperbar #logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            height: 50px;
+            width: 170px;
+            border-radius: 10px;
+        }
+
+        #upperbar #navlist {
+            left: 170px;
+            position: absolute;
+            top: 10px;
+            list-style: none;
+        }
+
+        #upperbar #navlist .navlistel {
+            display: inline;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 10px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 18px;
+        }
+
+        .navlistel:hover {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #profile {
+            right: 30px;
+            position: absolute;
+            height: 40px;
+            width: 150px;
+            border-radius: 10px;
+            top: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #profileicon {
+            top: 4px;
+            left: 15px;
+            position: absolute;
+            height: 30px;
+            width: 30px;
+            border-radius: 20px;
+            border: 1px solid black;
+        }
+
+        #name {
+            display: flex; 
+            align-items: center; 
+            position: relative;
+            width: 270px;
+            margin-left: 10px;
+            margin-top: 5px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        #profile:hover {
+            box-shadow: 0px 0px 10px rgba(34, 98, 2, 0.4);
+        }
+
+        #notiicon {
+            position: absolute;
+            height: 25px;
+            width: 25px;
+        }
+
+        #notidiv {
+            position: absolute;
+            right: 240px;
+            top: 20px;
+        }
+
+        #notiicon:hover {
+            content: url(notiicon1.png);
+        }
+
+        ::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+}
+
+        #progress {
+            position: absolute;
+            top: 80px;
+            left: 10px;
+            border-radius: 20px;
+            width: 300px;
+            height: 235px;
+            overflow-y: auto; /* Enable vertical scrollbar */
+            padding: 5px;
+            box-shadow: 0px 0px 10px rgba(34, 98, 2, 0.4);
+        }
+
+        #progress #proline {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 20px; 
+        }
+
+        .progress-container {
+            display: flex; 
+            align-items: center; 
+            position: relative;
+            width: 220px;
+            margin-left: 10px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            background-color: #e1e2e0b0;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 20px;
+            border-radius: 10px;
+            background-color: #4caf50;
+        }
+
+        #percentage {
+            position: absolute;
+            right: -45px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        #button {
+            position: absolute;
+            left: 400px;
+            top: 100px;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+
+        #button1 {
+            position: absolute;
+            left: 400px;
+            top: 200px;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px; /* Width of the scrollbar */
+        }
+
+        #courses-section {
+            position: absolute;
+            height: 500px;
+            width: 500px;
+            box-shadow: 0px 0px 10px rgba(34, 98, 2, 0.4);
+            right: 20px;
+            top: 80px;
+            border-radius: 20px;
+            overflow-y: auto;
+        }
+
+        #course-tagline {
+            position: absolute;
+            left: 15%;
+            font-size: 17px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        #course-box {
+            display: flex; 
+            align-items: center; 
+            position: relative;
+            width: 90%;
+            height: 70px;
+            margin-left: 25px;
+            margin-top: 60px;
+            box-shadow: 0px 0px 10px rgba(34, 98, 2, 0.4);
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        #course-name {
+            position:absolute;
+            top: -13px;
+            left: 20px;
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        } 
+
+        #tap-here {
+            position: absolute;
+            left: 20px;
+            top: 23px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+
+    </style>
+
+
+</head>
+<body>
+    <div id="upperbar">
+        <img src="logo.png" alt="" id="logo">
+        <ul id="navlist">
+            <li class="navlistel">Home</li>
+            <li class="navlistel">Courses</li>
+            <li class="navlistel">Quizzes</li>
+            <li class="navlistel">Progress</li>
+            <li class="navlistel">About Us</li>
+        </ul>
+
+        <div id="profile">
+            <img src="profileicon.png" alt="profile" id="profileicon">
+            <p id="name">Username</p>
+        </div>
+
+        <div id="notidiv">
+            <img src="notiicon.PNG" alt="" id="notiicon">
+        </div>
+    </div>
+
+    <div id="progress">
+         <center>
+            <p id="proline">Track Your Progress!</p>
+         </center>
+
+         <div id="challenge">
+            
+         </div>
+    </div>
+
+    <div id="button">
+        <p id="but">Add a course name</p>
+    </div>
+
+    <div id="button1">
+        <p id="but1">Increase the range by 10</p>
+    </div>
+
+    <div id="courses-section">
+        <p id="course-tagline">Bellow are some courses according to your interest.</p>
+        
+    </div>
+
+
+</body>
+
+<script>
+
+    let but = document.getElementById("but");
+    let but1 = document.getElementById("but1");
+    let challenge = document.getElementById("challenge");
+    let coursebox = document.getElementById("course-box");
+    let coursename = document.getElementById("course-name");
+    let coursessection = document.getElementById("courses-section");
+    let taphere = document.getElementById("taphere");
+    let nameofcr;
+
+    // coursebox.addEventListener("click", function() {
+    //     window.open("course_page.html", "_blank");
+    // });
+
+    let list_of_courses = [];
+
+    function makeanelement(nameofcourse, taphereline, paddingtop) {
+        let courseBoxDiv = document.createElement("div");
+        courseBoxDiv.id = "course-box";
+        courseBoxDiv.style.marginTop = paddingtop;
+        courseBoxDiv.style.marginBottom = "5px";
+        let courseName = document.createElement("p");
+        courseName.id = "course-name";
+        courseName.textContent = nameofcourse;
+        let tapHere = document.createElement("p");
+        tapHere.id = "tap-here";
+        tapHere.textContent = taphereline;
+
+        courseBoxDiv.addEventListener("click", function() {
+            nameofcr = nameofcourse;
+            if(list_of_courses.indexOf(nameofcr)===-1) {
+                list_of_courses.push(nameofcr);
+                buttonclick(nameofcr);
+            }
+            localStorage.setItem('nameofcr', nameofcr);
+            window.open("course_page.html", "_blank");
+        });
+
+        coursessection.appendChild(courseBoxDiv);
+        courseBoxDiv.appendChild(courseName);
+        courseBoxDiv.appendChild(tapHere);
+    }
+
+    let nameofbtn = localStorage.getItem('nameofbtn');
+    if (nameofbtn === "Programming") {
+        makeanelement("Want To Learn C Programming?", "Unlock the Secrets of the C Language!", "60px");
+        makeanelement("Want To Learn C++ Programming?", "Embark on an Adventure in C++ Wonderland!",  "10px");
+        makeanelement("Want To Learn About Data Management?", "Learn the basics of Database management System!", "10px");
+        makeanelement("Want To Start With HTML?", "Start your web development journey with HTML!", "10px");
+        makeanelement("Want To Style Your Website With CSS?", "CSS Canvas: Painting Designs with Style Sheets!", "10px");
+        makeanelement("Want To Learn Java Programming?", "Java Journey: From Novice to Ninja!", "10px");
+        makeanelement("Want To Start With Designing?", "Start your design journey with Figma!", "10px");
+        makeanelement("Want To Learn Python Programming?", "Take a Trip to the Python Side of Programming!", "10px");
+    }
+
+    function buttonclick(CrName) {
+
+        // Creating the title of the challenge
+
+        let chalName = document.createElement("p");
+        chalName.id = "name";
+
+        chalName.textContent = CrName;
+
+        challenge.appendChild(chalName);
+
+        // Adding the progress bar.
+        
+        let maindiv = document.createElement("div");
+        maindiv.id = "pro";
+        let subdiv = document.createElement("div");
+        subdiv.className = "progress-container";
+        let subsubdiv = document.createElement("div");
+        subsubdiv.className = "progress-bar";
+        subsubdiv.id = "myBar";
+        let percentage = document.createElement("p");
+        percentage.id = "percentage";
+
+        percentage.textContent = "100%";
+
+        challenge.appendChild(maindiv);
+
+        maindiv.appendChild(subdiv);
+        subdiv.appendChild(subsubdiv);
+        subdiv.appendChild(percentage);
+    }
+
+    but.addEventListener("click", buttonclick);
+
+    function button1click() {
+
+            function move() {
+                percentage = document.getElementById("percentage");
+                percentageText = percentage.textContent;
+                var numericPart = parseInt(percentageText, 10);
+                console.log(numericPart);
+                var elem = document.getElementById("myBar"); 
+                var width = numericPart;
+                var id = setInterval(frame, 10);
+                let i = 0;
+                function frame() {
+                if (width >= 100) {
+                    clearInterval(id);
+                } else if(i<10){
+                        width++;  
+                        i++
+                        elem.style.width = width + '%'; 
+                        percentage.textContent = width+"%";
+                    }
+                }
+            }
+            move(); 
+    }
+
+    but1.addEventListener("click", button1click);
+
+  </script>
+
+</html>
