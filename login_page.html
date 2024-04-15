@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        
+</head>
+<body>
+    <div id="main">
+
+
+
+        <p id="welcome">Welcome Back!</p>
+
+        <h1 id="login">Log in</h1>
+
+        <p id="enterdetails">Welcome back! Please enter your details...</p>
+
+        <div id="invalidmsgdiv">
+            <p id="invalidmsg"></p>
+        </div>
+
+        <p id="email">Email</p>
+        <input type="text" id="emailtxt" placeholder="Enter your email">
+
+
+        <p id="password">Password</p>
+        <input type="password" id="passtxt" placeholder="...........">
+        <img id="passimg" src="passwordimg2.png" alt="eye">
+
+        <p id="newuser">Are you a new user? </p>
+
+        <a href="register_page.html">
+            <button id="register">Register</button>
+        </a>
+        
+        <button id="forpass">Forgot Password?</button>
+
+      
+        <a id="atag">
+            <button id="loginbtn" >Log in</button>
+        </a>
+      
+
+    </div>
+</body>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+    import { getDatabase, set, ref, get } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyCCtFqlwoJWW3XlDcqQphm9JgKpD2iABq0",
+        authDomain: "personalized-learning-platform.firebaseapp.com",
+        projectId: "personalized-learning-platform",
+        storageBucket: "personalized-learning-platform.appspot.com",
+        messagingSenderId: "515750673308",
+        appId: "1:515750673308:web:761abaecab8488d7bfe659"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+
+    const dbref = ref(database);
+
+    const loginbtn = document.getElementById("loginbtn");
+
+    const forpass = document.getElementById('forpass');
+    
+
+
+    function forgetpassword() {
+        let emailtxt = document.getElementById("emailtxt");
+        if(emailtxt.value == "") {
+            let newplaceholder = "* Please enter the email!";
+            emailtxt.classList.add('red-placeholder');
+            emailtxt.setAttribute("placeholder", newplaceholder);
+            return false;
+        }
+        else {
+            sendPasswordResetEmail(auth, emailtxt.value)
+            .then(function() {
+                alert('Password reset email sent. Please check your inbox.');
+            })
+            .catch(function(error) {
+                alert(error.message);
+            });
+        }
+    }
+
+    forpass.addEventListener('click', forgetpassword);
+
+
+
+    
+    let loginUser = evt => {
+
+                function stopLoadingAfterDelay(delayInMillis) {
+                    setTimeout(function() {
+                        stopLoading();
+                    }, delayInMillis);
+                }
+
+                
+                function stopLoading() {
+                
+                    var loader = document.getElementById("loader");
+                    loader.style.display = "none";
+
+                }
+
+        const emailauth = document.getElementById("emailtxt").value;
+        const passwordauth = document.getElementById("passtxt").value;
+
+        let e = 0;
+        let p = 0;
+
+        if(!validate_email(emailauth)) {
+            e = 1;
+        }
+
+        if(!validate_password()) {
+            p = 1;
+        }
+
+        if(e==1 || p==1) {
+            return
+        }
+
+        let atag = document.getElementById('atag');
+        atag.innerHTML = "<div id=\"loader\"></div>";
+        
+
+        console.log("validation completed!");
+
+        signInWithEmailAndPassword(auth, emailauth, passwordauth)
+        .then((credentials)=> {
+
+            var user = auth.currentUser;
+            console.log(credentials);
+
+            
+            stopLoadingAfterDelay(2000);
+            window.location.href = "mainpage.html";
+
+        }) 
+
+        .catch((error)=> {
+            console.log(error.message);
+            let msg = error.message;
+            if(msg == "Firebase: Error (auth/invalid-credential).") {
+                let invalidmsgdiv = document.getElementById('invalidmsgdiv');
+                console.log(invalidmsgdiv);
+                console.log("Error found!");
+                invalidmsgdiv.innerHTML = "<p id=\"invalidmsg\">Password or email entered is incorrect!</p>";
+
+                stopLoadingAfterDelay(1);
+                var loginButton = document.createElement('button');
+                loginButton.setAttribute('id', 'loginbtn');
+                loginButton.textContent = 'Log in';
+
+                var atag = document.getElementById('atag');
+                atag.appendChild(loginButton);
+
+                loginButton.addEventListener('click', loginUser);
+                return
+            }    
+        })   
+    }
+
+    loginbtn.addEventListener('click', loginUser);
+
+    function validate_email(email) {
+        let emailtxt = document.getElementById("emailtxt");
+        if(emailtxt.value == "") {
+            let newplaceholder = "* Please enter the email!";
+            emailtxt.classList.add('red-placeholder');
+            emailtxt.setAttribute("placeholder", newplaceholder);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function validate_password() {
+        let passtxt = document.getElementById("passtxt");
+        if(passtxt.value == "") {
+            let newplaceholder = "* Please enter the password!";
+            passtxt.classList.add('red-placeholder');
+            passtxt.setAttribute("placeholder", newplaceholder);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    let passimg = document.getElementById("passimg");
+    
+
+    passimg.addEventListener('click', imgchange1);
+    
+    function imgchange1() {
+        let passtxt = document.getElementById('passtxt');
+        if(passimg.src == 'file:///C:/Users/SHREE/Documents/Web%20Technology%20Practical/passwordimg2.png' && passtxt.type === "password") {
+            passimg.setAttribute('src', 'passwordimg1.png');
+            passtxt.type = 'text';
+        }
+        else {
+            passimg.setAttribute('src', 'passwordimg2.png');
+            passtxt.type = 'password';
+        }
+        
+        console.log('eye 1 button clicked!');
+    } 
+</script>
+</html>

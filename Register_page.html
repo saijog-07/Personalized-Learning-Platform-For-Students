@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+
+<body>
+    <style>
+
+        #passimg {
+            height: 40px;
+            width: 40px;
+        }
+        #conpassimg {
+            height: 40px;
+            width: 40px;
+        }
+    </style>
+    <div id="main">
+
+        <div id="contentdiv">
+            
+            
+
+            <h1 id="login">Register</h1>
+
+            <p id="enterdetails">Please enter your details...</p>
+
+                <p id="name">Enter Name</p>
+                <input type="text" id="firstnametxt" placeholder="First name">
+                <input type="text" id="lastnametxt" placeholder="Last name">
+
+                <p id="email">Enter Email</p>
+                <input type="text" id="emailtxt" placeholder="Enter your email">
+
+                <p id="username">Select a username for yourself</p>
+                <input type="text" id="usernametxt" placeholder="Enter your username">
+
+                <p id="password">Enter Password</p>
+                <input type="password" id="passtxt" placeholder="...........">
+                <img id="passimg" src="passwordimg2.png" alt="eye">
+                
+
+                <p id="passreq">(must include A-Z, a-z, 0-9, special symbol)</p>
+
+                <p id="conpassword">Confirm Password</p>
+                <input type="password" id="conpasstxt" placeholder="...........">
+                <img id="conpassimg" src="passwordimg2.png" alt="eye">
+
+                <p id="newuser">Already have an account? </p>
+
+                <a href="login_page.html">
+                    <button id="loginal">Log in</button>
+                </a>
+                
+                <a id="atag">
+                    <button id="registerbtn">Register</button>
+                </a>
+        </div>
+    </div>
+
+</body>
+
+<script type="module">
+    
+   
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+    import { getDatabase, set, ref, get } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyCCtFqlwoJWW3XlDcqQphm9JgKpD2iABq0",
+        authDomain: "personalized-learning-platform.firebaseapp.com",
+        projectId: "personalized-learning-platform",
+        storageBucket: "personalized-learning-platform.appspot.com",
+        messagingSenderId: "515750673308",
+        appId: "1:515750673308:web:761abaecab8488d7bfe659"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+    
+
+
+
+    const Mainform = document.getElementById("Mainform");
+    const registerbtn = document.getElementById("registerbtn");
+
+    
+    let RegisterUser = evt => {
+
+                function stopLoadingAfterDelay(delayInMillis) {
+                    setTimeout(function() {
+                        stopLoading();
+                    }, delayInMillis);
+                }
+
+                
+                function stopLoading() {
+                
+                    var loader = document.getElementById("loader");
+                    loader.style.display = "none";
+
+                }
+
+        const firstname = document.getElementById("firstnametxt").value;
+        const lastname = document.getElementById("lastnametxt").value;
+        const emailauth = document.getElementById("emailtxt").value;
+        const passwordauth = document.getElementById("passtxt").value;
+        const conpassword = document.getElementById("conpasstxt").value;
+        const username = document.getElementById("usernametxt").value;
+
+        let e = 0;
+        let fn = 0;
+        let ln = 0;
+        let p = 0;
+        let c = 0;
+        let u = 0;
+        
+        if(!validate_firstname()) {
+           fn = 1;
+           console.log("Name not validated!");
+        }
+
+        if(!validate_lastname()) {
+            ln = 1;
+            console.log("Last Name not validated!");
+        }
+        
+        if(!validate_email(emailauth)) {
+            e = 1;
+            console.log("Email not validated!");
+        }
+
+        if(!validate_password()) {
+            p = 1;
+            console.log("Password not validated!");
+        }
+
+        if(!validate_confirmpassword()) {
+            c = 1;
+            console.log("Confirm password not validated!");
+        }
+
+
+    
+
+        if(fn==1 || ln==1 || e==1 || p==1 || c==1) {
+            return
+        }
+        
+        let atag = document.getElementById('atag');
+        atag.innerHTML = "<div id=\"loader\"></div>";
+
+        checkUsername().then((isAvailable) => {
+        if (isAvailable) {
+            console.log("Username is available!");
+
+            createUserWithEmailAndPassword(auth, emailauth, passwordauth)
+        .then((credentials)=> {
+            var user = auth.currentUser;
+
+            console.log(credentials);
+
+            set(ref(database, 'users/' + 'registration/' + username), {
+                'First name': firstname,
+                'Last name': lastname,
+                'Email': emailauth,
+                'Password' : passwordauth,
+                'Username' : username
+
+            }).then(() => { 
+                    stopLoadingAfterDelay(2000);
+                    console.log("Registration successful!");
+                }).catch((error) => {
+                    console.error("Error saving data to the database:", error);
+                });   
+        })    
+        .catch((error) => {
+            console.log(error);
+            let msg = error.message;
+            if (msg == "Firebase: Error (auth/email-already-in-use).") {
+                let emailtxt = document.getElementById("emailtxt");
+                let newplaceholder = "* The email is already registered!";
+                emailtxt.value = "";
+                emailtxt.classList.add('red-placeholder');
+                emailtxt.setAttribute("placeholder", newplaceholder);
+                stopLoadingAfterDelay(1);
+                //atag.innerHTML = " <button id=\"registerbtn\">Register</button>";
+                var registerButton = document.createElement('button');
+                registerButton.setAttribute('id', 'registerbtn');
+                registerButton.textContent = 'Register';
+
+                // Append the button to the desired element (e.g., atag)
+                var atag = document.getElementById('atag');
+                atag.appendChild(registerButton);
+
+                // Add event listener to the button
+                registerButton.addEventListener('click', RegisterUser);
+                return
+            }
+            else {
+                window.location.href = "mainpage.html";
+            }
+        }) 
+        } else {
+            let usernametxt = document.getElementById("usernametxt");
+                let newplaceholder = "* The username is not available!";
+                usernametxt.value = "";
+                usernametxt.classList.add('red-placeholder');
+                usernametxt.setAttribute("placeholder", newplaceholder);
+
+                stopLoadingAfterDelay(1);
+                var registerButton = document.createElement('button');
+                registerButton.setAttribute('id', 'registerbtn');
+                registerButton.textContent = 'Register';
+
+                // Append the button to the desired element (e.g., atag)
+                var atag = document.getElementById('atag');
+                atag.appendChild(registerButton);
+
+                // Add event listener to the button
+                registerButton.addEventListener('click', RegisterUser);
+                return
+        }
+    }).catch((error) => {
+        console.error("Error checking username:", error);
+    });
+
+            
+    }
+
+    registerbtn.addEventListener('click', RegisterUser);
+
+    function validate_email(email) {
+        console.log("email function called");
+        let emailtxt = document.getElementById("emailtxt");
+        if(emailtxt.value == "") {
+            let newplaceholder = "* Please enter the email!";
+            emailtxt.classList.add('red-placeholder');
+            emailtxt.setAttribute("placeholder", newplaceholder);
+            return false;
+        }
+        const expression = /^[^@]+@\w+(\.\w+)+\w$/.test(email);
+        if(expression==true) {
+            return true;
+        } 
+        else {
+            let newplaceholder = "* Your email is invalid!";
+            emailtxt.value = "";
+            emailtxt.classList.add('red-placeholder');
+            emailtxt.setAttribute("placeholder", newplaceholder);
+            return false;
+        }
+    }
+
+    function validate_firstname() {
+        let firstnametxt = document.getElementById("firstnametxt");
+        if(firstnametxt.value == "") {
+            let newplaceholder = "* Enter first name!";
+            firstnametxt.classList.add('red-placeholder');
+            firstnametxt.setAttribute("placeholder", newplaceholder);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function validate_lastname() {
+        let lastnametxt = document.getElementById("lastnametxt");
+        if(lastnametxt.value == "") {
+            let newplaceholder = "* Enter last name!";
+            lastnametxt.classList.add('red-placeholder');
+            lastnametxt.setAttribute("placeholder", newplaceholder);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function validate_password() {
+        let passtxt = document.getElementById("passtxt");
+        if(passtxt.value == "") {
+            let newplaceholder = "* Please enter the password!";
+            passtxt.classList.add('red-placeholder');
+            passtxt.setAttribute("placeholder", newplaceholder);
+            return false;
+        }
+
+        else if(passtxt.length < 6 && passtxt.length > 0) {
+            let passtxt = document.getElementById("passtxt");
+            passtxt.value = "";
+            let newplaceholder = "* Please enter at least 6 characters!";
+            passtxt.classList.add('red-placeholder');
+            passtxt.setAttribute("placeholder", newplaceholder);
+            return false;
+        }
+        else {
+            let passtxt = document.getElementById("passtxt").value;
+            let uppercaseRegex = /[A-Z]/;
+            let lowercaseRegex = /[a-z]/;
+            let digitRegex = /[0-9]/;
+            let specialSymbolRegex = /[^A-Za-z0-9]/;
+
+            let hasUppercase = uppercaseRegex.test(passtxt);
+            let hasLowercase = lowercaseRegex.test(passtxt);
+            let hasDigit = digitRegex.test(passtxt);
+            let hasSpecialSymbol = specialSymbolRegex.test(passtxt);
+
+            if(hasUppercase && hasLowercase && hasDigit && hasSpecialSymbol) {
+                console.log("Password is validated!");
+                return true;
+            }
+            else {
+                let passtxt = document.getElementById("passtxt");
+                passtxt.value = "";
+                let newplaceholder = "* Enter the required fields in your password!";
+                passtxt.classList.add('red-placeholder');
+                passtxt.setAttribute("placeholder", newplaceholder);
+                return false;
+            }
+        }
+    }
+
+    function validate_confirmpassword() {
+        let passtxt = document.getElementById("passtxt").value;
+        let conpasstxt = document.getElementById("conpasstxt").value;
+        if(conpasstxt == passtxt) {
+            console.log("Password matched!!!");
+            return true;
+        }
+        else {
+            let conpasstxt = document.getElementById("conpasstxt");
+            conpasstxt.value = "";
+            let newplaceholder = "* Password doesn't match!";
+            conpasstxt.classList.add('red-placeholder');
+            conpasstxt.setAttribute("placeholder", newplaceholder);
+            return false;
+        }
+    }
+
+    
+
+    let passimg = document.getElementById("passimg");
+    let conpassimg = document.getElementById("conpassimg");
+
+    passimg.addEventListener('click', imgchange1);
+    conpassimg.addEventListener('click', imgchange2);
+
+    function imgchange1() {
+        let passtxt = document.getElementById('passtxt');
+        if(passtxt.type === "password") {
+            passimg.setAttribute('src', 'passwordimg1.png');
+            passtxt.type = 'text';
+        }
+        else {
+            passimg.setAttribute('src', 'passwordimg2.png');
+            passtxt.type = 'password';
+        }
+        
+        console.log('eye 1 button clicked!');
+    }
+
+
+    function imgchange2() {
+        let conpasstxt = document.getElementById('conpasstxt');
+        if(conpasstxt.type === "password") {
+            conpassimg.setAttribute('src', 'passwordimg1.png');
+            conpasstxt.type = 'text';
+        }
+        else {
+            conpassimg.setAttribute('src', 'passwordimg2.png');
+            conpasstxt.type = 'password';
+        }
+        
+        console.log('eye 1 button clicked!');
+    }
+
+    function checkUsername() {
+    return new Promise((resolve, reject) => {
+        const username = document.getElementById("usernametxt").value;
+        const usersRef = ref(database, 'users/registration/' + username);
+
+        get(usersRef)
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    // Username exists, reject with false
+                    resolve(false);
+                } else {
+                    // Username does not exist, resolve with true
+                    resolve(true);
+                }
+            })
+            .catch((error) => {
+                console.error("Error checking username:", error);
+                reject(error);
+            });
+    });
+
+
+}
+
+</script>
+ 
+</html>
