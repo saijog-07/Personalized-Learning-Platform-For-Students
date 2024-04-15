@@ -27,7 +27,7 @@
 
         <p id="password">Password</p>
         <input type="password" id="passtxt" placeholder="...........">
-        <img id="passimg" src="passwordimg2.png" alt="eye">
+        <img id="passimg" src="Images/passwordimg2.png" alt="eye">
 
         <p id="newuser">Are you a new user? </p>
 
@@ -209,11 +209,11 @@
     function imgchange1() {
         let passtxt = document.getElementById('passtxt');
         if(passimg.src == 'file:///C:/Users/SHREE/Documents/Web%20Technology%20Practical/passwordimg2.png' && passtxt.type === "password") {
-            passimg.setAttribute('src', 'passwordimg1.png');
+            passimg.setAttribute('src', 'Images/passwordimg1.png');
             passtxt.type = 'text';
         }
         else {
-            passimg.setAttribute('src', 'passwordimg2.png');
+            passimg.setAttribute('src', 'Images/passwordimg2.png');
             passtxt.type = 'password';
         }
         
