@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #c028231e;
+    }
+    .result-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #ffffffb5;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    }
+   h1 {
+  color:royalblue;
+}
+#result {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+
+}
+color{
+  color: red;
+}
+
+ </style>
+  <title>Quiz Result</title>
+</head>
+<body>
+
+<div class="result-container">
+  <h1>Quiz Result</h1>
+
+  <div id="result">
+    <!-- JavaScript will insert the score and level here -->
+  </div>
+  <color>
+  <p>If you want to change the domain, <a href="interest.html" id="changeDomainLink">click here</a>.</p>
+</color>
+</div>
+
+<script type="module">
+    
+  const urlParams = new URLSearchParams(window.location.search);
+
+  let score = localStorage.getItem('my_score');
+
+  
+  document.getElementById("result").innerHTML = "<p>Your score: " + score + " out of 10</p>";
+
+  
+  let level;
+  if (score >= 7) {
+    level = "Advanced";
+  } else if (score >= 4) {
+    level = "Middle";
+  } else {
+    level = "Beginner";
+  }
+
+  document.getElementById("result").innerHTML += "<p>You are at the " + level + " level.</p>";
+
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCCtFqlwoJWW3XlDcqQphm9JgKpD2iABq0",
+        authDomain: "personalized-learning-platform.firebaseapp.com",
+        projectId: "personalized-learning-platform",
+        storageBucket: "personalized-learning-platform.appspot.com",
+        messagingSenderId: "515750673308",
+        appId: "1:515750673308:web:761abaecab8488d7bfe659"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    let username = localStorage.getItem('usern');
+
+    let topic = localStorage.getItem('Topic');
+
+
+  set(ref(database, 'users/' + username + '/' + 'interest' ), {
+            'Topic' : topic,
+            'Score' : score,
+            'Level' : level
+        }).then(() => { 
+                
+            }).catch((error) => {
+                console.error("Error saving data to the database:", error);
+            });
+
+</script>
+
+</body>
+</html>

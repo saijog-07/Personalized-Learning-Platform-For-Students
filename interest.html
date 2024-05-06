@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interest Buttons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="button-container">
+        <button class="button" id="Gaming">Gaming</button>
+        <button class="button" id="Arts">Arts</button>
+        <button class="button" id="Programming">Programming</button>
+        <button class="button" id="Physics">Physics</button>
+        <button class="button" id="Chemistry" >Chemistry</button>
+    </div>
+</body>
+
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCCtFqlwoJWW3XlDcqQphm9JgKpD2iABq0",
+        authDomain: "personalized-learning-platform.firebaseapp.com",
+        projectId: "personalized-learning-platform",
+        storageBucket: "personalized-learning-platform.appspot.com",
+        messagingSenderId: "515750673308",
+        appId: "1:515750673308:web:761abaecab8488d7bfe659"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    let topic = "";
+
+    document.getElementById('Chemistry').addEventListener('click', function () {
+        topic = "Chemistry";
+        localStorage.setItem('Topic', topic);
+        alert("Topic choosen : " + topic);
+        window.location.href = "quiz_Chemistry.html";
+    });
+
+    document.getElementById('Arts').addEventListener('click', function () {
+        topic = "Arts";
+        localStorage.setItem('Topic', topic);
+        alert("Topic choosen : " + topic);
+        window.location.href = "quiz_Arts.html";
+    });
+
+    
+
+
+</script>
+
+</html>

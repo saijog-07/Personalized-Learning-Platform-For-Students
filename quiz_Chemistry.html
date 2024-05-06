@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+   body {
+     font-family: Arial, sans-serif;
+       background-color: #c028231e;
+    margin: 0;
+    padding: 0;
+    }
+    .quiz-container {
+      
+      max-width: 1000px;
+    margin: 100px auto;
+    background-color: #ffffff;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+    }
+    .question {
+      margin-bottom: 50px;
+    }
+    h1 {
+    text-align: center;
+    color: #333;
+    }
+    button {
+  display: block;
+  margin: 0 auto;
+  background-color: #4caf50; /* Green background color */
+  color: #ffffff; /* White text color */
+  padding: 10px 20px; /* Padding around the button */
+  font-size: 16px; /* Font size */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+#result {
+  text-align: center; /* Center the text */
+  margin-top: 20px; /* Add some top margin for spacing */
+}
+
+#result p {
+  font-size: 18px; /* Font size for the result text */
+  color: #333333; /* Text color */
+}
+
+#result p:first-child {
+  margin-bottom: 10px; /* Add some bottom margin for spacing between score and level */
+}
+
+#result p:last-child {
+  font-weight: bold; /* Make the level text bold */
+}
+
+button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+   
+
+  </style>
+  <title>CHEMISTRY Quiz</title>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h1>CHEMISTRY Quiz</h1>
+  
+  
+  <div class="question" id="question1">
+    <p>1.What is the chemical symbol for gold?</p>
+    <input type="radio" name="q1" value="a"> a) Au
+    <input type="radio" name="q1" value="b"> b) Ag
+    <input type="radio" name="q1" value="c"> c) Fe
+    <input type="radio" name="q1" value="d"> d) Cu
+  </div>
+
+  <div class="question" id="question2">
+    <p>2.The number of protons in the nucleus of an atom is called the:</p>
+    <input type="radio" name="q2" value="a"> a) Automic mass
+    <input type="radio" name="q2" value="b"> b) Automic number
+    <input type="radio" name="q2" value="c"> c) Electron number
+    <input type="radio" name="q2" value="d"> d) Neutron number
+  </div>
+
+  <!-- Repeat similar blocks for questions 2 to 9 -->
+  <div class="question" id="question3">
+  <p>3.Elements in the same period of the periodic table have the same number of:</p>
+   
+      <input type="radio" name="q3" value="a"> a) Protons
+      <input type="radio" name="q3" value="b"> b) Neutrons
+      <input type="radio" name="q3" value="c"> c) Electrons
+      <input type="radio" name="q3" value="d"> d) Valence electrons
+   
+  </div>
+  <div class="question" id="question4">
+  <p>4.Which type of bond involves the transfer of electrons from one atom to another?</p>
+    
+       <input type="radio" name="q4" value="a"> a) Ionic
+       <input type="radio" name="q4" value="b"> b) Covalent
+       <input type="radio" name="q4" value="c"> c) Metallic
+       <input type="radio" name="q4" value="d"> d) Hydrogen
+   </div>
+
+<div class="question" id="question5">
+<p>5.Elements in the same period of the periodic table have the same number of:</p>
+    
+       <input type="radio" name="q" value="a"> a) Protons
+       <input type="radio" name="q" value="b"> b) Neutrons
+       <input type="radio" name="q" value="c"> c) Electrons
+       <input type="radio" name="q" value="d"> d) Valence electrons
+</div>
+
+
+    <div class="question" id="question6">
+
+  <p>6.In a combustion reaction, what are the typical products?</p>
+    
+       <input type="radio" name="q5" value="a"> a) Water and carbon dioxide
+       <input type="radio" name="q5" value="b"> b) Oxygen and nitrogen
+       <input type="radio" name="q5" value="c"> c) Hydrogen and helium
+       <input type="radio" name="q5" value="d"> d) Methane and ethane
+    
+</div>
+    <div class="question" id="question7">
+
+<p>7.A substance that can act as both an acid and a base is called:</p>
+       <input type="radio" name="q6" value="a"> a) Amphoteric
+       <input type="radio" name="q6" value="b"> b) Neutral
+       <input type="radio" name="q6" value="c"> c) Ioni
+       <input type="radio" name="q6" value="d"> d) Basic
+
+</div>
+  <div class="question" id="question8">
+
+<p>8.What does the coefficient in a chemical equation represent?</p>
+
+     <input type="radio" name="q8" value="a"> a) Number of moles
+     <input type="radio" name="q8" value="b"> b) Number of atoms
+     <input type="radio" name="q8" value="c"> c) Temperature
+     <input type="radio" name="q8" value="d"> d) Volume
+</div>
+
+  <div class="question" id="question9">
+
+<p>9.In a chemical reaction, the rate is typically affected by changes in:</p>
+   
+      <input type="radio" name="q9" value="a"> a) Pressure
+      <input type="radio" name="q9" value="b"> b) Temperature
+      <input type="radio" name="q9" value="c"> c) Concentration
+      <input type="radio" name="q9" value="d"> d) All of the above
+</div>
+
+  <div class="question" id="question10"></div>
+  <p>10.At room temperature and pressure, which state of matter does not have a fixed shape or volume?</p>
+    
+       <input type="radio" name="q10" value="a"> a) Solid
+       <input type="radio" name="q10" value="b"> b) Liquid
+       <input type="radio" name="q10" value="c"> c) Gas
+      <input type="radio" name="q10" value="d"> d) Plasma
+</div>
+
+<button onclick="calculateScore()">Submit</button>
+
+
+  <div id="result"></div>
+</div>
+
+
+<script>
+  function calculateScore() {
+    document.querySelector('button').disabled = true;
+    document.getElementById("result").innerHTML = "<p>Loading...</p>";
+    setTimeout(function () {
+    let score = 0;
+    
+
+    // Calculate score based on correct answers
+    if (document.querySelector('input[name="q1"]:checked').value === "a") score++;
+    if (document.querySelector('input[name="q2"]:checked').value === "b") score++;
+    if (document.querySelector('input[name="q3"]:checked').value === "c") score++;
+    if (document.querySelector('input[name="q4"]:checked').value === "a") score++;
+    if (document.querySelector('input[name="q"]:checked').value === "c") score++;
+    if (document.querySelector('input[name="q5"]:checked').value === "a") score++;
+    if (document.querySelector('input[name="q6"]:checked').value === "a") score++;
+    if (document.querySelector('input[name="q8"]:checked').value === "b") score++;
+    if (document.querySelector('input[name="q9"]:checked').value === "d") score++;
+    if (document.querySelector('input[name="q10"]:checked').value === "c") score++;
+    // Repeat similar checks for questions 2 to 10
+
+    // Display the score
+    setTimeout(function () {
+        localStorage.setItem('my_score', score);
+        window.location.href = "result_page.html"; // Replace with the actual page URL
+      }, 2000); // 2000 milliseconds (2 seconds) delay before redirecting
+    }, 1500); // 1500 milliseconds (1.5 seconds) simulated delay
+  }
+
+</script>
+
+</body>
+</html>
